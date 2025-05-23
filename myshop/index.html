@@ -1,0 +1,278 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bath & Body</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="navbar">
+    <!-- Hamburger (mobile only) -->
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <!-- Navigation links (desktop) and side menu (mobile) -->
+    <nav id="main-nav">
+      <a href="#">Home</a>
+      <a href="#">Soaps</a>
+      <a href="#">Body Wash</a>
+      <a href="#">Face Wash</a>
+      <a href="#">Body Scrub</a>
+    </nav>
+    <h2 class="site-title">Bath & Body</h2>
+    <div class="cart-link">
+      <a href="#" onclick="toggleCart()">Cart 🛒<span id="cart-count">0</span></a>
+    </div>
+  </div>
+  <!-- Side menu for mobile -->
+  <nav id="side-menu">
+    <a href="#">Home</a>
+    <a href="#">Soaps</a>
+    <a href="#">Body Wash</a>
+    <a href="#">Face Wash</a>
+    <a href="#">Body Scrub</a>
+  </nav>
+</header>
+
+<script>
+// filepath: c:\Users\91855\OneDrive\Desktop\myshop\index.html
+function toggleMenu() {
+  const menu = document.getElementById('side-menu');
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+function openCheckout() {
+  document.getElementById('checkout-modal').style.display = 'flex';
+  document.getElementById('order-status').textContent = '';
+  document.getElementById('checkout-form').reset();
+  document.getElementById('payment-details').innerHTML = '';
+}
+function closeCheckout() {
+  document.getElementById('checkout-modal').style.display = 'none';
+}
+// Show payment details fields based on method
+const paymentSelect = document.getElementById('payment-method');
+if (paymentSelect) {
+  paymentSelect.addEventListener('change', function() {
+    const val = this.value;
+    const details = document.getElementById('payment-details');
+    if (!details) return;
+    if (val === 'upi') {
+      details.innerHTML = `<label for='upiid'>UPI ID</label><br><input type='text' id='upiid' name='upiid' required style='width:100%;padding:0.5rem;'>`;
+    } else if (val === 'card') {
+      details.innerHTML = `<label for='cardno'>Card Number</label><br><input type='text' id='cardno' name='cardno' required pattern='[0-9]{16}' maxlength='16' style='width:100%;padding:0.5rem;'><br><label for='expiry'>Expiry</label><br><input type='text' id='expiry' name='expiry' required placeholder='MM/YY' style='width:100%;padding:0.5rem;'><br><label for='cvv'>CVV</label><br><input type='password' id='cvv' name='cvv' required pattern='[0-9]{3}' maxlength='3' style='width:100%;padding:0.5rem;'>`;
+    } else if (val === 'netbanking') {
+      details.innerHTML = `<label for='bank'>Bank Name</label><br><input type='text' id='bank' name='bank' required style='width:100%;padding:0.5rem;'>`;
+    } else {
+      details.innerHTML = '';
+    }
+  });
+}
+// Handle order placement
+function handleOrder(e) {
+  e.preventDefault();
+  const payment = document.getElementById('payment-method').value;
+  let paid = false;
+  if (payment === 'upi' || payment === 'card' || payment === 'netbanking') {
+    // Simulate payment success for demo
+    paid = true;
+  } else if (payment === 'cod') {
+    paid = true;
+  }
+  const status = document.getElementById('order-status');
+  if (paid) {
+    status.textContent = 'Order placed successfully! 🎉';
+    status.style.color = 'green';
+    setTimeout(() => {
+      closeCheckout();
+      clearCart();
+    }, 2000);
+  } else {
+    status.textContent = 'Order not placed. Please complete payment.';
+    status.style.color = 'red';
+  }
+  return false;
+}
+</script>
+
+  <div class="hero">
+    <h1>Natural Beauty Products</h1>
+    <p>Soap, Body Wash, Face Wash, and Scrubs with Ayurvedic Goodness</p>
+  </div>
+
+  <section class="grid" id="products">
+    <!-- Sample product -->
+    <div class="product-card">
+      <img src="./assets/neem.png" alt="Neem Soap">
+      <h3>Neem Soap</h3>
+      <p>₹120</p>
+      <button onclick="addToCart({name: 'Herbal Soap', price: 120})">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="./assets/orange_fw.png" alt="Orange Face Wash">
+      <h3>Orange Face Wash</h3>
+      <p>₹150</p>
+      <button onclick="addToCart({name: 'Neem Face Wash', price: 150})">Add to Cart</button>
+    </div>
+    <div class="product-card">
+      <img src="./assets/charcoal_fs.png" alt="Charcoal face Scrub">
+      <h3>Charcoal face Scrub</h3>
+      <p>₹250</p>
+      <button onclick="addToCart({name: 'Coffee Body Scrub', price: 250})">Add to Cart</button>
+    </div>
+    <div class="product-card">
+    <img src="./assets/rose_fs.png" alt="Green Tea Scrub">
+    <h3>Rose face Scrub</h3>
+    <p>₹210</p>
+    <button onclick="addToCart({name: 'Green Tea Scrub', price: 210})">Add to Cart</button>
+  </div>
+  <div class="product-card">
+    <img src="./assets/lavender_bw.png" alt="Lavender Body Wash">
+    <h3>Lavender Body Wash</h3>
+    <p>₹140</p>
+    <button onclick="addToCart({name: 'Honey & Oats Soap', price: 140})">Add to Cart</button>
+  </div>
+  <div class="product-card">
+    <img src="./assets/mint.png" alt="Mint Soap">
+    <h3>Mint Soap</h3>
+    <p>₹190</p>
+    <button onclick="addToCart({name: 'Mint Body Wash', price: 190})">Add to Cart</button>
+  </div>
+  <div class="product-card">
+    <img src="./assets/Charcoal_fw.png" alt="Charcoal Face Wash">
+    <h3>Charcoal Face Wash</h3>
+    <p>₹180</p>
+    <button onclick="addToCart({name: 'Charcoal Face Wash', price: 180})">Add to Cart</button>
+  </div>
+  <div class="product-card">
+    <img src="./assets/sandalwood_bw.png" alt="Sandalwood Body Wash">
+    <h3>Sandalwood Body Wash</h3>
+    <p>₹220</p>
+    <button onclick="addToCart({name: 'Sandalwood Body Wash', price: 220})">Add to Cart</button>
+  </div>
+  <div class="product-card">
+    <img src="./assets/rose.png" alt="Rose Soap">
+    <h3>Rose Soap</h3>
+    <p>₹130</p>
+    <button onclick="addToCart({name: 'Rose Soap', price: 130})">Add to Cart</button>
+  </div>
+  </section>
+
+  <aside class="cart" id="cart">
+    <h3>Your Cart</h3>
+    <div id="cart-items"></div>
+    <p id="total">Total: ₹0</p>
+    <button onclick="window.location.href='checkout.html'">Checkout</button>
+    <button onclick="toggleCart()" class="absolute top-2 right-2 text-red-500">✖</button>
+  </aside>
+
+  <!-- Checkout Modal 
+  <div id="checkout-modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:9999; align-items:center; justify-content:center;">
+    <div class="modal-content" style="background:#fff; padding:2rem; border-radius:10px; max-width:400px; width:90%; margin:auto; position:relative;">
+      <button onclick="closeCheckout()" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:1.5rem; cursor:pointer;">✖</button>
+      <h3 style="margin-bottom:1rem;">Checkout</h3>
+      <form id="checkout-form" onsubmit="return handleOrder(event)">
+        <div style="margin-bottom:1rem;">
+          <label for="name">Full Name</label><br>
+          <input type="text" id="name" name="name" required style="width:100%;padding:0.5rem;">
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label for="address">Delivery Address</label><br>
+          <textarea id="address" name="address" required style="width:100%;padding:0.5rem;"></textarea>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label for="phone">Phone Number</label><br>
+          <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" style="width:100%;padding:0.5rem;">
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label>Payment Method</label><br>
+          <select id="payment-method" name="payment" required style="width:100%;padding:0.5rem;">
+            <option value="">Select Payment Option</option>
+            <option value="upi">UPI</option>
+            <option value="card">Credit/Debit Card</option>
+            <option value="cod">Cash on Delivery</option>
+            <option value="netbanking">Net Banking</option>
+          </select>
+        </div>
+        <form id="paymentForm" onsubmit="submitPayment(event)">
+    <div id="upiForm" class="form-section">
+      <label for="upiId">UPI ID:</label>
+      <input type="text" id="upiId" required>
+    </div>
+
+    <div id="cardForm" class="form-section">
+      <label for="cardNumber">Card Number:</label>
+      <input type="text" id="cardNumber" required>
+      <label for="cardName">Name on Card:</label>
+      <input type="text" id="cardName" required>
+      <label for="cardExpiry">Expiry Date:</label>
+      <input type="text" id="cardExpiry" placeholder="MM/YY" required>
+      <label for="cardCVV">CVV:</label>
+      <input type="text" id="cardCVV" required>
+    </div>
+
+    <div id="bankForm" class="form-section">
+      <label for="bankName">Select Bank:</label>
+      <select id="bankName" required>
+        <option value="">-- Select Bank --</option>
+        <option value="SBI">SBI</option>
+        <option value="HDFC">HDFC</option>
+        <option value="ICICI">ICICI</option>
+      </select>
+    </div>
+
+    <button type="submit" style="margin-top: 20px;">Proceed</button>
+  </form>
+
+  <div id="successMessage" class="success-message"></div>
+
+  <script>
+    const paymentForm = document.getElementById("paymentForm");
+    const successMessage = document.getElementById("successMessage");
+
+    const thankYouQuotes = [
+      "Thank you for supporting small businesses!",
+      "We hope to pamper you again soon!",
+      "Your order made our day – we hope it makes yours too!"
+    ];
+
+    function showForm() {
+      const selected = document.getElementById("paymentMethod").value;
+      document.querySelectorAll(".form-section").forEach(el => el.style.display = "none");
+      if (selected === "upi") document.getElementById("upiForm").style.display = "block";
+      if (selected === "card") document.getElementById("cardForm").style.display = "block";
+      if (selected === "bank") document.getElementById("bankForm").style.display = "block";
+    }
+
+    function submitPayment(event) {
+      event.preventDefault();
+      const totalPaid = "₹749.00";
+      const randomQuote = thankYouQuotes[Math.floor(Math.random() * thankYouQuotes.length)];
+      successMessage.innerHTML = `<strong>Order placed successfully!</strong><br>Total Amount Paid: ${totalPaid}<br><em>${randomQuote}</em>`;
+      successMessage.style.display = "block";
+      paymentForm.reset();
+      showForm();
+    }
+  </script>
+        <div id="payment-details"></div>
+        <button type="submit" style="width:100%;padding:0.8rem 0;background:#2563eb;color:#fff;font-weight:700;border:none;border-radius:6px;font-size:1.1rem;">Place Order</button>
+      </form>
+      <div id="order-status" style="margin-top:1rem;font-weight:600;"></div>
+    </div>
+  </div>-->
+
+<button id="theme-toggle" aria-label="Toggle dark mode">
+    <span id="theme-icon">🌙</span>
+  </button>
+  <footer>
+    <p>&copy; 2025 Bath & Body. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

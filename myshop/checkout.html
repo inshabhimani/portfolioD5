@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f9f6f2; }
+    .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { color: #333; }
+    .section { margin-bottom: 30px; }
+    label { display: block; margin-top: 10px; }
+    input, select, button { padding: 8px; margin-top: 5px; width: 100%; max-width: 400px; }
+    .form-section { display: none; margin-top: 15px; }
+    .success-message { display: none; margin-top: 20px; padding: 15px; background: #e0ffe0; border: 1px solid #00cc00; }
+    .order-summary { background: #f1f1f1; padding: 10px; border-radius: 5px; }
+    .home-button { margin-top: 15px; padding: 10px 20px; background: #007BFF; color: #fff; border: none; border-radius: 5px; text-decoration: none; display: inline-block; }
+    .home-button:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Checkout</h2>
+
+    <div class="section">
+      <h3>Shipping Details</h3>
+      <form id="checkoutForm" onsubmit="submitPayment(event)">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" required>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" required>
+
+        <label for="pincode">Pincode:</label>
+        <input type="text" id="pincode" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" required>
+
+        <div class="section">
+          <h3>Order Summary</h3>
+          <div class="order-summary">
+            <p>Product: Bath & Body Essentials Kit</p>
+            <p>Quantity: 1</p>
+            <p>Total: ₹749.00</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Payment Method</h3>
+          <select id="paymentMethod" onchange="showForm()" required>
+            <option value="">-- Select --</option>
+            <option value="upi">UPI</option>
+            <option value="card">Credit/Debit Card</option>
+            <option value="bank">Net Banking</option>
+            <option value="cash">Cash on Delivery</option>
+          </select>
+
+          <div id="upiForm" class="form-section">
+            <label for="upiId">UPI ID:</label>
+            <input type="text" id="upiId">
+          </div>
+
+          <div id="cardForm" class="form-section">
+            <label for="cardNumber">Card Number:</label>
+            <input type="text" id="cardNumber">
+            <label for="cardName">Name on Card:</label>
+            <input type="text" id="cardName">
+            <label for="cardExpiry">Expiry Date:</label>
+            <input type="text" id="cardExpiry" placeholder="MM/YY">
+            <label for="cardCVV">CVV:</label>
+            <input type="text" id="cardCVV">
+          </div>
+
+          <div id="bankForm" class="form-section">
+            <label for="bankName">Select Bank:</label>
+            <select id="bankName">
+              <option value="">-- Select Bank --</option>
+              <option value="SBI">SBI</option>
+              <option value="HDFC">HDFC</option>
+              <option value="ICICI">ICICI</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" style="margin-top: 20px;">Place Order</button>
+      </form>
+    </div>
+
+    <div id="successMessage" class="success-message"></div>
+  </div>
+
+  <script>
+    const thankYouQuotes = [
+      "Thank you for supporting small businesses!",
+      "We hope to pamper you again soon!",
+      "Your order made our day – we hope it makes yours too!"
+    ];
+
+    function showForm() {
+      const selected = document.getElementById("paymentMethod").value;
+      document.querySelectorAll(".form-section").forEach(el => el.style.display = "none");
+      if (selected === "upi") document.getElementById("upiForm").style.display = "block";
+      if (selected === "card") document.getElementById("cardForm").style.display = "block";
+      if (selected === "bank") document.getElementById("bankForm").style.display = "block";
+    }
+
+    function submitPayment(event) {
+      event.preventDefault();
+      const totalPaid = "₹749.00";
+      const randomQuote = thankYouQuotes[Math.floor(Math.random() * thankYouQuotes.length)];
+      const successMessage = document.getElementById("successMessage");
+      successMessage.innerHTML = `<strong>Order placed successfully!</strong><br>Total Amount Paid: ${totalPaid}<br><em>${randomQuote}</em><br><a href='index.html' class='home-button'>Return to Home</a>`;
+      successMessage.style.display = "block";
+      document.getElementById("checkoutForm").reset();
+      showForm();
+    }
+  </script>
+
+</body>
+</html>

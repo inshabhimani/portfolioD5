@@ -1,0 +1,481 @@
+<!-- HELLO
+-
+DevFolio is a minimal, clean, lightweight and fully responsive template for Developers!
+Created by Anil Seervi.
+-
+GitHub repo: https://github.com/AnilSeervi/DevFolio
+README: https://github.com/AnilSeervi/DevFolio/blob/master/README.md
+-
+Have fun creating your portfolio on this template!!! -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+
+    <!-- Title: add your Portfolio websites's title here -->
+    <title>Insha Bhimani | Developer</title>
+
+    <!-- Add some coding keywords below, Ex: (javascript, yourusername, etc) -->
+    <meta
+      name="keywords"
+      content="sstark125, Insha Bhimani, Python, C#, Web Dev"
+    />
+
+    <!-- Improve your SEO by adding a small description of you -->
+    <meta name="description" content="Insha Bhimani | Data Analyst" />
+
+    <!-- Add your png Logo to the assets folder and change the href attr accordingly  -->
+    <link rel="icon" type="image/png" href="./assets/devfolio-logo.png" />
+
+    <!-- Add your primary-theme color for the value of content -->
+    <meta name="theme-color" content="#36d1dc" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://devfolio.js.org/" />
+    <meta property="og:title" content="Insha Bhimani | Developer" />
+    <meta
+      property="og:description"
+      content="Made using CSS, SCSS, HTML, JavaScript"
+    />
+    <meta
+      property="og:image"
+      content="https://devfolio.js.org/assets/devfolio.png"
+    />
+
+
+    <!-- link tags -->
+    <link rel="preload" as="style" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+
+    <!-- FontAwesome Icons link -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script defer src="./javascript/scrollreveal.min.js"></script>
+    <script
+      defer
+      type="text/javascript"
+      src="./javascript/scrollveal.js"
+    ></script>
+  </head>
+  
+
+  <body>
+    <!-- Responsive Navigation Bar -->
+    <nav class="navbar">
+      <div class="navbar__container">
+        <a href="#hero" class="navbar__logo">Insha Bhimani</a>
+        <button class="navbar__toggle" id="navbar-toggle" aria-label="Toggle navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+        <ul class="navbar__menu" id="navbar-menu">
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#certifications">Certifications</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Joke Banner BELOW header, ABOVE hero section -->
+    <div id="jokeBanner" style="width:100%;background:#ffffff;color:#272341;padding:1.2rem 0.5rem;text-align:center;font-size:1.3rem;box-shadow:0 2px 8px rgba(0,0,0,0.04);margin-bottom:1.5rem;">
+      <h2 class="text-xl font-semibold text-yellow-800 mb-4">Here's a Joke for You!</h2>
+      <span id="jokeTextBanner">Loading joke...</span>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("https://official-joke-api.appspot.com/random_joke")
+          .then((response) => response.json())
+          .then((data) => {
+            const jokeText = `${data.setup} ${data.punchline}`;
+            document.getElementById("jokeTextBanner").textContent = jokeText;
+          })
+          .catch((error) => {
+            document.getElementById("jokeTextBanner").textContent = "Oops! Couldn't load a joke.";
+          });
+      });
+    </script>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" style="position:fixed;bottom:0;left:0;width:100%;background:#222;color:#fff;padding:1rem;text-align:center;z-index:9999;display:none;">
+      This website uses cookies to enhance your experience. By continuing to browse, you agree to our use of cookies.
+      <button id="acceptCookies" style="margin-left:1rem;padding:0.5rem 1.2rem;border:none;border-radius:4px;background:#36d1dc;color:#222;font-weight:600;cursor:pointer;">Accept</button>
+    </div>
+    <script>
+      // Cookie Consent logic
+      function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+          var date = new Date();
+          date.setTime(date.getTime() + (days*24*60*60*1000));
+          expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+      }
+      function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+      }
+      window.addEventListener('DOMContentLoaded', function() {
+        if (!getCookie('cookieConsent')) {
+          document.getElementById('cookieConsent').style.display = 'block';
+        }
+        document.getElementById('acceptCookies').onclick = function() {
+          setCookie('cookieConsent', 'true', 365);
+          // Example: set a sample cookie
+          setCookie('theme', localStorage.getItem('theme') || 'default', 365);
+          setCookie('lastSection', localStorage.getItem('lastSection') || '', 365);
+          document.getElementById('cookieConsent').style.display = 'none';
+        };
+      });
+    </script>
+    <script>
+      // Store last visited section in localStorage
+      const sectionIds = ['hero','about','projects','certifications','myshop','contact'];
+      sectionIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('mouseenter', function() {
+            localStorage.setItem('lastSection', id);
+          });
+        }
+      });
+      // Store theme selection in localStorage (example: dark/light)
+      // Add your theme switcher logic here if you have one
+      // Example:
+      // function setTheme(theme) {
+      //   document.body.className = theme;
+      //   localStorage.setItem('theme', theme);
+      // }
+    </script>
+
+    <!-- Hero Section -->
+    <div id="hero">
+      <section class="container">
+        <h1 class="hero-title">
+          Hello, my name is
+          <span class="text-color-main name">Insha Bhimani</span>
+          <br />
+          Welcome to my website
+        </h1>
+        <p class="hero-cta">
+          <a class="cta-btn cta-btn--hero" href="#about">Learn More</a>
+        </p>
+      </section>
+      <a href="#about" class="scroll-down-link" aria-label="scroll-down">
+        <div class="scroll-down"></div>
+      </a>
+    </div>
+    <!-- /END Hero Section -->
+
+    <!-- About Section -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About Me</h2>
+        <div class="row about-wrapper">
+          <div class="about-wrapper__image">
+            <img
+              style="border-radius: 50%"
+              class="img-fluid"
+              src="./assets/Inshu.jpeg"
+              alt="Profile Image"
+              width="350"
+              height="350"
+            />
+          </div>
+          <div class="about-wrapper__info">
+            <p class="about-wrapper__info-text">
+              I am currently pursuing a BTech in Computer Engineering (2nd year) with a strong academic foundation, having completed a Diploma in Computer Engineering with 82% in 2023.
+            </p>
+            <p class="about-wrapper__info-text">I'm passionate about learning new technologies, especially in the field of web development and data science, and continuously strive to improve both my technical and soft skills.</p>
+
+            <span class="about-wrapper__cta">
+              <a
+                href="./assets/Insha_Bhimani_resume (2).pdf"
+                class="cta-btn cta-btn--resume"
+                target="_blank"
+                >Resume</a
+              >
+
+            </span>
+            <section id="video" class="py-16 bg-blue-50 fade-in-up">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold text-blue-700 mb-8">My Portfolio Video</h2>
+    <div class="relative pb-[56.25%] h-0 overflow-hidden rounded-xl shadow-xl">
+      <!--<iframe class="absolute top-0 left-0 w-full h-full rounded-xl"
+        src="https://www.youtube.com/embed/xi0FP37j9eU"
+        title="YouTube video"
+        frameborder="0"
+        allowfullscreen></iframe>-->
+         <!--<video width="100%" height="auto" controls>
+  <source src="assets/video.mp4" type="video/mp4">
+</video>-->
+<video 
+  width="100%" 
+  height="auto" 
+  controls 
+  autoplay 
+  muted 
+  style="
+    border-radius: 1rem; 
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08); 
+    background: #fff; 
+    max-width: 640px; 
+    margin: 2rem auto 0 auto; 
+    display: block;">
+  <source src="assets/video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+    </div>
+  </div>
+</section>
+          </div>
+        </div>
+      </div>
+      <div class="about-wrapper__info">
+        <h2 class="section-title2" style="text-align: center">Skills</h2>
+        <div class="ribbon">
+          <img src="./assets/HTML-Logo.png" alt="HTML Logo" class="img-rib" />
+          <img src="./assets/CSS-Logo.png" alt="CSS Logo" class="img-rib" />
+          <img src="./assets/JS-Logo.png" alt="JavaScript Logo" class="img-rib" />
+          <img src="./assets/Python-Logo.png" alt="Python Logo" class="img-rib" />
+          <img src="./assets/VS-Logo.png" alt="Visual Studio Logo" class="img-rib" />
+        </div>
+      </div>
+    </section>
+    <!-- /END About Section -->
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <div class="container">
+        <div class="project-wrapper">
+          <h2 class="section-title dark-blue-text">Projects & Achievements</h2>
+
+          <!-- Each .row is a project -->
+          <article class="row">
+            <div class="project-wrapper__text">
+              <h3 class="project-wrapper__text-title">
+                Health Care Management System
+              </h3>
+              <p class="project-wrapper__text-info">
+                Developed a web-based system using HTML, CSS, JavaScript, PHP, and MySQL to manage healthcare data efficiently and securely.
+              </p>
+            </div>
+            <div class="project-wrapper__image">
+              <a
+                
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div class="thumbnail rounded">
+                  <img
+                    src="./assets/hcms.png"
+                    class="img-fluid"
+                    alt="Health Care Management System Project Image"
+                    width="1366"
+                    height="767"
+                  />
+                </div>
+              </a>
+            </div>
+          </article>
+          <!-- /END Project -->
+
+          <!-- Each .row is a project -->
+          <article class="row">
+            <div class="project-wrapper__text">
+              <h3 class="project-wrapper__text-title">Top Performer - Diploma</h3>
+              <p class="project-wrapper__text-info">
+                Achieved 2nd rank in Computer Engineering Diploma from Theem College of Engineering.
+              </p>
+            </div>
+            <div class="project-wrapper__image">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div class="thumbnail rounded">
+                  <img
+                    src="./assets/certificate.jpeg"
+                    class="img-fluid"
+                    alt="Top Performer Diploma Project Image"
+                    width="1366"
+                    height="767"
+                  />
+                </div>
+              </a>
+            </div>
+          </article>
+          <!-- /END Project -->
+              <section id="certifications">
+      <div class="container">
+        <h2 class="section-title dark-blue-text">Certifications</h2>
+        <div class="space-y-4">
+          <div class="p-4 bg-[#112240] rounded-xl">
+            <h3 class="project-wrapper__text-title">SQL and .NET Training</h3>
+            <p class="text-[#a8b2d1]">
+              Completed an industry certification course covering SQL database management and .NET application development with Kantascrypt.
+            </p>
+            <span class="text-sm text-[#64ffda]">December 2024</span>
+          </div>
+
+          <div class="p-4 bg-[#112240] rounded-xl">
+            <h3 class="project-wrapper__text-title">Data Analytics & Visualization</h3>
+            <p class="text-[#a8b2d1]">
+              Completed Accenture North America Data Analytics and Visualization Job Simulation on Forage.
+            </p>
+            <span class="text-sm text-[#64ffda]">January 2024</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    </section>
+    <!-- End Projects Section -->
+
+    <!-- My Shop Section -->
+    <section id="myshop" style="background:#f8fafc; padding:2.5rem 0 1.5rem 0;">
+      <div style="max-width:600px;margin:0 auto;text-align:center;padding:0 1rem;">
+        <h2 style="font-size:2.2rem; font-weight:700; color:#1e293b; margin-bottom:1rem;line-height:1.2;">🛍️ My Shop</h2>
+        <a href="myshop/index.html" target="_blank" rel="noopener noreferrer" class="cta-btn cta-btn--resume myshop-btn" style="font-size:1.5rem; padding:1.3rem 3.5rem; border-radius:8px; background:#2563eb; color:#fff; font-weight:700; text-decoration:none; display:inline-block; margin-top:1rem;">Visit Store</a>
+      </div>
+    </section>
+    <style>
+      @media (max-width: 600px) {
+        #myshop h2 {
+          font-size: 1.5rem !important;
+        }
+        #myshop .myshop-btn {
+          font-size: 1rem !important;
+          padding: 0.7rem 1.2rem !important;
+        }
+        #myshop div {
+          padding: 0 0.5rem !important;
+        }
+      }
+    </style>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-wrapper">
+          <p class="contact-wrapper__text">Let's Connect!</p>
+          <form action="https://formspree.io/f/xwkgyyqg" method="POST" class="contact-form" style="max-width:400px;margin:auto;display:flex;flex-direction:column;gap:1rem;">
+            <input type="text" name="name" placeholder="Your Name" required style="padding:0.7rem 1rem;border:1px solid #ccc;border-radius:5px;font-size:1rem;">
+            <input type="email" name="email" placeholder="Your Email" required style="padding:0.7rem 1rem;border:1px solid #ccc;border-radius:5px;font-size:1rem;">
+            <textarea name="message" placeholder="Your Message" rows="5" required style="padding:0.7rem 1rem;border:1px solid #ccc;border-radius:5px;font-size:1rem;"></textarea>
+            <button type="submit" class="cta-btn cta-btn--resume" style="width:100%;">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- END Contact Section -->
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="container">
+
+        <a href="#hero" class="back-to-top" aria-label="go back to top">
+          <i class="fa fa-angle-up fa-2x" aria-hidden="true"></i>
+        </a>
+
+        <div class="social-links">
+          <a
+            href="https://www.instagram.com/insha_bhimani/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram Profile"
+          >
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+
+          <a
+            href="mailto:insha.bhimani21@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Email Insha Bhimani"
+          >
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+
+          <a
+            href="tel:+917058947608"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Call Insha Bhimani"
+          >
+            <i class="fa-solid fa-phone"></i>
+          </a>
+        </div>
+
+        <!-- Google Map Embed -->
+        <div class="footer-map" style="margin-top: 20px;">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.449247745268!2d72.76523607521565!3d19.20956668201817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7a968fc62fc31%3A0xc5be6b8e0b8b2b8e!2sPalghar%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1716288412735!5m2!1sen!2sin"
+            width="100%"
+            height="200"
+            style="border:0; border-radius: 8px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+        <hr />
+
+        <p class="footer__text">
+          &copy; <span id="year"></span> - Official Portfolio of
+          <a
+            href="https://github.com/sstark125"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Insha Bhimani</a>
+        </p>
+
+      </div>
+    </footer>
+    <!-- END Footer Section -->
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+    <script src="./javascript/vanilla-tilt.min.js"></script>
+    <script type="text/javascript" src="./javascript/valtilt.js"></script>
+    <script>
+      // Hamburger menu toggle
+      const toggle = document.getElementById('navbar-toggle');
+      const menu = document.getElementById('navbar-menu');
+      toggle.addEventListener('click', function() {
+        menu.classList.toggle('navbar__menu--active');
+        toggle.classList.toggle('navbar__toggle--active');
+      });
+      // Optional: Close menu on link click (mobile UX)
+      document.querySelectorAll('.navbar__menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          menu.classList.remove('navbar__menu--active');
+          toggle.classList.remove('navbar__toggle--active');
+        });
+      });
+    </script>
+  </body>
+</html>
